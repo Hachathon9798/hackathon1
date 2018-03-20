@@ -20,10 +20,26 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
         <activity
             android:name=".FirstActivity"
             android:label="@string/title_activity_first"
+            android:theme="@style/AppTheme.AppBarOverlay"></activity>
+        <activity
+            android:name=".LoginActivity"
+            android:label="@string/title_activity_first"
+
             android:theme="@style/AppTheme.NoActionBar"></activity>
+        <activity
+            android:name=".RegisterationActivity"
+            android:label="@string/title_activity_first"
+
+            android:theme="@style/AppTheme.NoActionBar"></activity>
+        <activity
+            android:name=".MainActivity"
+            android:label="@string/title_activity_first"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
+
     </application>
 
 </manifest>

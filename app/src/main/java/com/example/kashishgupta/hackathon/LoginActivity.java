@@ -91,18 +91,18 @@ public class LoginActivity extends AppCompatActivity {
 
         // Check for a valid password, if the user entered one.
         if (!TextUtils.isEmpty(password) && !isPasswordValid(password)) {
-            mPass.setError(getString(R.string.error_invalid_password));
+            mPass.setError("");
             focusView = mPass;
             cancel = true;
         }
 
         // Check for a valid email address.
         if (TextUtils.isEmpty(email)) {
-            mEmail.setError(getString(R.string.error_field_required));
+            mEmail.setError("");
             focusView = mEmail;
             cancel = true;
         } else if (!isEmailValid(email)) {
-            mEmail.setError(getString(R.string.error_invalid_email));
+            mEmail.setError("");
             focusView = mEmail;
             cancel = true;
         }
