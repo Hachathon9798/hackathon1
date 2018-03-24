@@ -102,7 +102,7 @@ public class RegisterationActivity extends AppCompatActivity implements View.OnC
         storageReference = FirebaseStorage.getInstance().getReference();
 
 
-        dbRef = FirebaseDatabase.getInstance().getReference();
+        dbRef = FirebaseDatabase.getInstance().getReference("Users");
         auth = FirebaseAuth.getInstance();
 
 
@@ -119,19 +119,15 @@ public class RegisterationActivity extends AppCompatActivity implements View.OnC
                 switch (position) {
                     case 0:
 
-                        imgView.setVisibility(View.VISIBLE);
-                        upload.setVisibility(View.VISIBLE);
-                        usGst.setVisibility(View.INVISIBLE);
+
+                        usGst.setVisibility(View.VISIBLE);
                         type="Government Employee";
-                        image="";
 
 
                         break;
                     case 1:
 
                         usGst.setVisibility(View.VISIBLE);
-                        imgView.setVisibility(View.INVISIBLE);
-                        upload.setVisibility(View.INVISIBLE);
 
                         type="Industrialist";
 
@@ -139,11 +135,9 @@ public class RegisterationActivity extends AppCompatActivity implements View.OnC
                         break;
                     case 2:
 
-                        usGst.setVisibility(View.INVISIBLE);
-                        imgView.setVisibility(View.INVISIBLE);
-                        upload.setVisibility(View.INVISIBLE);
+                        usGst.setVisibility(View.VISIBLE);
                         type="Student";
-                        image="Student";
+                        usGst.setText("Student");
 
                         break;
                 }
