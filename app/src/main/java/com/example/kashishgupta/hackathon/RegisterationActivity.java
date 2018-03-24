@@ -151,7 +151,7 @@ public class RegisterationActivity extends AppCompatActivity implements View.OnC
 
 
     }
-    void registerUser(){
+    void registerUser1(){
 
         auth.createUserWithEmailAndPassword(uRef.email,uRef.password)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
@@ -162,7 +162,7 @@ public class RegisterationActivity extends AppCompatActivity implements View.OnC
                             user = task.getResult().getUser();
                             String uid = user.getUid();
 
-                            dbRef.child("users").child(uid).setValue(uRef);
+                            dbRef.child("UserGov").child(uid).setValue(uRef);
 
                         }else{
                             Toast.makeText(RegisterationActivity.this,""+task.getException(),Toast.LENGTH_LONG).show();
@@ -172,113 +172,47 @@ public class RegisterationActivity extends AppCompatActivity implements View.OnC
 
     }
 
-    void init(){
+    void registerUser2(){
 
-        Intent intent = new Intent();
+        auth.createUserWithEmailAndPassword(uRef.email,uRef.password)
+                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        if(task.isSuccessful()){
+                            Toast.makeText(RegisterationActivity.this,"Registration Finished",Toast.LENGTH_LONG).show();
+                            user = task.getResult().getUser();
+                            String uid = user.getUid();
 
-        // Setting intent type as image to select image from phone storage.
-        intent.setType("image/*");
-        intent.setAction(Intent.ACTION_GET_CONTENT);
-        startActivityForResult(Intent.createChooser(intent, "Please Select Image"), Image_Request_Code);
+                            dbRef.child("UserInd").child(uid).setValue(uRef);
+
+                        }else{
+                            Toast.makeText(RegisterationActivity.this,""+task.getException(),Toast.LENGTH_LONG).show();
+                        }
+                    }
+                });
 
     }
 
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 
-        super.onActivityResult(requestCode, resultCode, data);
+    void registerUser3(){
 
-        if (requestCode == Image_Request_Code && resultCode == RESULT_OK && data != null && data.getData() != null) {
+        auth.createUserWithEmailAndPassword(uRef.email,uRef.password)
+                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        if(task.isSuccessful()){
+                            Toast.makeText(RegisterationActivity.this,"Registration Finished",Toast.LENGTH_LONG).show();
+                            user = task.getResult().getUser();
+                            String uid = user.getUid();
 
-            FilePathUri = data.getData();
+                            dbRef.child("UserStu").child(uid).setValue(uRef);
 
-            try {
-
-                // Getting selected image into Bitmap.
-                Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), FilePathUri);
-
-                // Setting up bitmap selected image into ImageView.
-                imgView.setImageBitmap(bitmap);
-
-                // After selecting image change choose button above text.
-                upload.setText("Image Selected");
-                UploadImageFileToFirebaseStorage();
-
-
-
-            }
-            catch (IOException e) {
-
-                e.printStackTrace();
-            }
-        }
-    }
-    public String GetFileExtension(Uri uri) {
-
-        ContentResolver contentResolver = getContentResolver();
-
-        MimeTypeMap mimeTypeMap = MimeTypeMap.getSingleton();
-
-        // Returning the file Extension.
-        return mimeTypeMap.getExtensionFromMimeType(contentResolver.getType(uri)) ;
-
-    }
-
-    public void UploadImageFileToFirebaseStorage() {
-
-        // Checking whether FilePathUri Is empty or not.
-        if (FilePathUri != null) {
-
-            // Setting progressDialog Title.
-
-            // Showing progressDialog.
-
-            // Creating second StorageReference.
-            StorageReference storageReference2nd = storageReference.child(Storage_Path + System.currentTimeMillis() + "." + GetFileExtension(FilePathUri));
-
-            // Adding addOnSuccessListener to second StorageReference.
-            storageReference2nd.putFile(FilePathUri)
-                    .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-                        @Override
-                        public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-
-                            // Getting image name from EditText and store into string variable.
-
-                            // Hiding the progressDialog after done uploading.
-
-                            // Showing toast message after done uploading.
-                            Toast.makeText(getApplicationContext(), "Image Uploaded Successfully ", Toast.LENGTH_LONG).show();
-
-                         image= taskSnapshot.getDownloadUrl().toString();
-
-                            // Getting image upload ID.
-
-                            // Adding image upload id s child element into databaseReference.
+                        }else{
+                            Toast.makeText(RegisterationActivity.this,""+task.getException(),Toast.LENGTH_LONG).show();
                         }
-                    })
-                    // If something goes wrong .
-                    .addOnFailureListener(new OnFailureListener() {
-                        @Override
-                        public void onFailure(@NonNull Exception exception) {
-                            Toast.makeText(getApplicationContext(), "Image Uploaded Successfully "+exception.getMessage(), Toast.LENGTH_LONG).show();
+                    }
+                });
 
-
-                        }
-                    })
-
-                    // On progress change upload time.
-                    .addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
-                        @Override
-                        public void onProgress(UploadTask.TaskSnapshot taskSnapshot) {
-
-
-                        }
-                    });
-        }
-        else {
-
-
-        }
     }
 
 
@@ -288,11 +222,7 @@ public class RegisterationActivity extends AppCompatActivity implements View.OnC
 
 
 
-            uRef.id=image;
-
-
-
-
+        uRef.id=image;
         uRef.type=type;
         uRef.name = usName.getText().toString().trim();
         uRef.email = usEmail.getText().toString().trim();
@@ -304,13 +234,18 @@ public class RegisterationActivity extends AppCompatActivity implements View.OnC
 
 
         if(v.getId() == R.id.button3){
-            registerUser();
+
+            if(type=="Government Employee"){
+                registerUser1();
+            }
+            else if(type=="Industrialist"){
+                registerUser2();
+            }
+            else if(type=="Student"){
+                registerUser3();
+            }
         }
        else if (v.getId()==R.id.button2){
-
-            init();
-
-
 
 
 

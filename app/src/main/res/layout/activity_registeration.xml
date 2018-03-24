@@ -65,6 +65,8 @@
                 android:ems="10"
                 android:hint="Upload Your GST NO"
                 android:visibility="invisible"
+
+
                 android:inputType="textPersonName"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
